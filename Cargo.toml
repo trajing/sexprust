@@ -1,0 +1,4 @@
+[package]
+name = "sexprust"
+version = "0.1.0"
+authors = ["trajing <trajingplaysgames@gmail.com>"]
