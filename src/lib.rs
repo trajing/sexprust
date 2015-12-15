@@ -1,7 +1,8 @@
 pub mod integer;
+pub mod nil;
 
-pub fn parse(s: &str) -> Expr {
-    println!("TODO!")
+pub fn parse(s: &str) {
+    println!("TODO!");
 }
 
 pub trait AtomParser<T> {
@@ -9,12 +10,13 @@ pub trait AtomParser<T> {
     fn parse_str(&self, &str) -> T;
 }
 
-pub trait AtomData<T> {
-    fn get_value(&self) -> T;
+trait SExpr {}
+
+struct Cons<A: SExpr, B: SExpr>(A, B);
+pub trait AtomData {
+    type T;
+    fn get_value(&self) -> Self::T;
 }
 
-pub enum Expr {
-    Nil,
-    SExpr(Expr),
-    Atom(AtomData),
-}
+impl<A: SExpr, B: SExpr> SExpr for Cons<A, B> {}
+impl<T: AtomData> SExpr for T {}
