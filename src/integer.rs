@@ -15,7 +15,7 @@ impl AtomData for Integer {
 
 pub struct IntegerParser;
 
-impl AtomParser<Integer> for IntegerParser {
+impl AtomParser for IntegerParser {
     fn str_is(&self, s: &str) -> bool {
         true
     }

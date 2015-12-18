@@ -6,14 +6,14 @@ pub struct Nil;
 impl AtomData for Nil {
     type T = bool;
 
-    fn get_value(&self) -> bool{
+    fn get_value(&self) -> bool {
         false
     }
 }
 
 pub struct NilParser;
 
-impl AtomParser<Nil> for NilParser {
+impl AtomParser for NilParser {
     fn str_is(&self, s: &str) -> bool {
         s == "nil"
     }
