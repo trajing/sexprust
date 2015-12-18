@@ -36,9 +36,11 @@ impl Parse {
     }
 }
 
-pub trait Plugin {
+pub trait PluginData {} // something should go here that we can access..
+
+pub trait Plugin { // is this needed besides AtomParser? Are there any other plugin types?
     fn handle_this(&self, &str) -> bool;
-    fn handle(&self, &str) -> bool;
+    fn handle(&self, &str) -> PluginData;
 }
 
 pub trait AtomParser {
