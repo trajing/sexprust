@@ -11,7 +11,7 @@ impl Parse {
         Box::new(nil::Nil)
     }
 
-    pub fn add_plugin_mut(&self, p: Plugin) -> Parse {
+    pub fn add_plugin_mut(&mut self, p: Plugin) -> Parse {
         self = self.add_plugin(p);
         self
     }
@@ -20,7 +20,7 @@ impl Parse {
         println!("TODO!");
     }
 
-    pub fn remove_plugin_mut(&self, p: Plugin) -> Parse {
+    pub fn remove_plugin_mut(&mut self, p: Plugin) -> Parse {
         self = self.remove_plugin(p);
         self
     }
@@ -31,7 +31,7 @@ impl Parse {
 
     pub fn default_plugins() -> Parse {
         Parse {
-            plugins: vec![] // Put defaults here
+            plugins: vec![integer::IntegerParser] // Put defaults here
         }
     }
 }
@@ -45,14 +45,14 @@ pub trait Plugin { // is this needed besides AtomParser? Are there any other plu
 
 pub trait AtomParser {
     fn str_is(&self, &str) -> bool;
-    fn parse_str(&self, &str) -> AtomData;
+    fn parse_str<T>(&self, &str) -> AtomData<T=T>;
 }
 
 impl Plugin for AtomParser {
     fn handle_this(&self, s: &str) -> bool {
         self.str_is(s)
     }
-    fn handle(&self, s: &str) -> AtomData {
+    fn handle<T>(&self, s: &str) -> AtomData<T=T> {
         self.parse_str(s)
     }
 }
@@ -75,12 +75,12 @@ impl PartialEq for Cons {
     }
 }
 
-impl PartialEq for AtomData {
-    fn eq(&self, other: AtomData) {
+impl<T> PartialEq for AtomData<T=T> {
+    fn eq(&self, other: AtomData<T=T>) {
         self.get_value() == other.get_value()
     }
 }
 
-impl<T: SExpr> SExpr for Cons {}
+impl SExpr for Cons {}
 
 impl<T: AtomData> SExpr for T {}
